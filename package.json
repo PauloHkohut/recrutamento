@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix",
-    "retencao": "ts-node src/retencao.ts"
+    "retencao": "node -r ts-node/register --env-file=.env.local src/retencao.ts"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
