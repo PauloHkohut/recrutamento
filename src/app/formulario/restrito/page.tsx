@@ -14,7 +14,7 @@ export default function Sucesso() {
                 <h1 className="h3 mb-3">Você já se candidatou recentemente!</h1>
                 <p>
                     Obrigado por se interessar pela nossas vagas, mas você já se candidatou recentemente e deve aguardar
-                    para de candidatar novamente.
+                    para se candidatar novamente.
                     <br />
                     Em caso de dúvidas, entre em contato conosco por e-mail.
                 </p>

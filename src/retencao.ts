@@ -51,4 +51,4 @@ function iniciar(testando: boolean = false): void {
     });
 }
 
-iniciar(true);
+iniciar(false);
