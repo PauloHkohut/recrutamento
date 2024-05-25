@@ -27,7 +27,7 @@ export default function Formulario() {
     useEffect(() => {
         formataCelular();
         validaFormulario();
-    }, [restricaoValidada]);
+    }, [restricaoValidada, termoAceito]);
 
     useEffect(() => {
         if (termoAceito === false) router.push('/');
