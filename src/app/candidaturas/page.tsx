@@ -3,8 +3,11 @@
 import { getCandidaturasViews } from '@/actions/candidaturas';
 import { useGetUsuario } from '@/auth/methods';
 import { Loading } from '@/components/Loading/Loading';
+import { storage } from '@/database/firebase';
+import FileSaver from 'file-saver';
+import { ref } from 'firebase/storage';
+import { getBlob } from 'firebase/storage';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import {
     CandidaturaInicial,
@@ -50,6 +53,12 @@ export default function Candidaturas() {
             ...prev,
             [campo]: valor,
         }));
+    };
+
+    const baixarCurriculo = async (candidatura: CandidaturaView) => {
+        const curriculo = ref(storage, `curriculos/${candidatura.curriculoId}`);
+        const data = await getBlob(curriculo);
+        FileSaver.saveAs(data, candidatura.curriculoId);
     };
 
     return usuario === undefined ? (
@@ -130,15 +139,14 @@ export default function Candidaturas() {
                                     >
                                         <i className="bi bi-person-lines-fill"></i>
                                     </button>
-                                    <Link
-                                        href={c.curriculoUrl}
-                                        target="_blank"
+                                    <button
                                         className="btn btn-primary"
                                         data-toggle="tooltip"
                                         title="Currículo"
+                                        onClick={() => baixarCurriculo(c)}
                                     >
                                         <i className="bi bi-file-earmark-arrow-down-fill"></i>
-                                    </Link>
+                                    </button>
                                 </div>
                             </td>
                         </tr>

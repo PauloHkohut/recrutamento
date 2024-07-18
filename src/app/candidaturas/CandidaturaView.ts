@@ -12,7 +12,7 @@ export interface CandidaturaView {
     loja: string;
     area: string;
     data: string;
-    curriculoUrl: string;
+    curriculoId: string;
 }
 
 export interface Ordenacao {
@@ -49,7 +49,7 @@ export const CandidaturaInicial: CandidaturaView = {
     loja: '',
     area: '',
     data: '',
-    curriculoUrl: '',
+    curriculoId: '',
 };
 
 /**

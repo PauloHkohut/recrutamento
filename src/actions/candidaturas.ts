@@ -1,14 +1,13 @@
 'use server';
 
 import { CandidaturaView } from '@/app/candidaturas/CandidaturaView';
-import { firestore, storage } from '@/database/firebase';
+import { firestore } from '@/database/firebase';
 import Area from '@/models/area';
 import { Candidatura, Horario, Sexo } from '@/models/candidatura';
 import Cidade from '@/models/cidade';
 import Loja from '@/models/loja';
 import Usuario from '@/models/usuario';
 import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
-import { getDownloadURL, ref } from 'firebase/storage';
 
 /**
  * Obtêm a idade a partir de um timestamp em milissegundos.
@@ -54,9 +53,6 @@ export async function getCandidaturasViews(): Promise<CandidaturaView[]> {
 
         const criadoEm = new Date(candidatura.criadoEm);
 
-        const curriculo = ref(storage, `curriculos/${candidatura.curriculoId}`);
-        const curriculoUrl = await getDownloadURL(curriculo);
-
         views.push({
             id: c.id,
             nome: candidatura.nome,
@@ -71,7 +67,7 @@ export async function getCandidaturasViews(): Promise<CandidaturaView[]> {
             loja: loja.nome,
             area: area.nome,
             data: criadoEm.toLocaleDateString('pt-BR'),
-            curriculoUrl: curriculoUrl,
+            curriculoId: candidatura.curriculoId,
         });
     }
 

@@ -1,4 +1,24 @@
+'use client';
+
+import { getAreasAbertas } from '@/actions/inicial';
+import { useEffect, useState } from 'react';
+
 export default function Home() {
+    const [areas, setAreas] = useState<string[]>([]);
+    const [requisicao, setRequisicao] = useState<boolean>(false);
+
+    useEffect(() => {
+        // Obtêm toda as áreas ao iniciar a página.
+        const setAreasInciais = async () => {
+            const data = await getAreasAbertas();
+            setAreas(data);
+        };
+        if (!requisicao) {
+            setRequisicao(true);
+            setAreasInciais();
+        }
+    }, [requisicao]);
+
     return (
         <>
             <div className="container py-5">
@@ -36,6 +56,15 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className="py-3">
+                <div className="text-center">
+                    <h1>Áreas Disponíveis</h1>
+                    {areas.map(area => {
+                        return <p key={area}>{area}</p>;
+                    })}
                 </div>
             </div>
         </>

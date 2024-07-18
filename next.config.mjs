@@ -6,7 +6,8 @@ const nextConfig = {
             hostname: 'lh3.googleusercontent.com',
             pathname: '**',
         }]
-    }
+    },
+    reactStrictMode: false,
 };
 
 export default nextConfig;
