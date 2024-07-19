@@ -1,6 +1,7 @@
 import { getCandidaturas } from '@/actions/formulario';
 import { getRestricaoCandidatura } from '@/actions/gerir';
 import Usuario from '@/models/usuario';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 /**
  * Formata celular usando máscara (00) 00000-0000
@@ -57,4 +58,26 @@ export async function validarRestricao(usuario: Usuario | undefined): Promise<bo
         if (diasPassado < restricao.dias) restrito = true;
     });
     return restrito;
+}
+
+/**
+ * Checa a validade do recaptcha.
+ *
+ * @export
+ */
+export function validaRecaptcha(recaptchaRef: ReCAPTCHA) {
+    const forms: NodeListOf<HTMLFormElement> = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+        form.addEventListener(
+            'submit',
+            event => {
+                const recaptcha = recaptchaRef.getValue();
+                if (!recaptcha) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            },
+            false,
+        );
+    });
 }

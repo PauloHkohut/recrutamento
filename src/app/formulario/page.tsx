@@ -11,8 +11,9 @@ import Estado from '@/models/estado';
 import Loja from '@/models/loja';
 import Usuario from '@/models/usuario';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { formataCelular, validaFormulario, validarRestricao } from './formUtils';
+import React, { useEffect, useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { formataCelular, validaFormulario, validaRecaptcha, validarRestricao } from './formUtils';
 
 export default function Formulario() {
     const router = useRouter();
@@ -23,11 +24,16 @@ export default function Formulario() {
     const [areas, setAreas] = useState([] as Area[]);
     const [restricaoValidada, setRestricaoValidada] = useState<boolean | undefined>(undefined);
     const [termoAceito, setTermoAceito] = useState<boolean | undefined>(undefined);
+    const recaptchaRef = React.createRef<ReCAPTCHA>();
 
     useEffect(() => {
         formataCelular();
         validaFormulario();
     }, [restricaoValidada, termoAceito]);
+
+    useEffect(() => {
+        if (recaptchaRef.current) validaRecaptcha(recaptchaRef.current);
+    }, [recaptchaRef]);
 
     useEffect(() => {
         if (termoAceito === false) router.push('/');
@@ -264,7 +270,14 @@ export default function Formulario() {
 
                     <div className="container">
                         <div className="row">
-                            <div className="col-md-3 offset-md-11">
+                            <div className="col-md-3">
+                                <ReCAPTCHA
+                                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+                                    ref={recaptchaRef}
+                                    hl="pt-BR"
+                                />
+                            </div>
+                            <div className="col-md-1 offset-md-8">
                                 <SubmitButton rotulo="Enviar" />
                             </div>
                         </div>
