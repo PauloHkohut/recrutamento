@@ -15,6 +15,8 @@ export interface CandidaturaView {
     curriculoId: string;
 }
 
+export const QtdePorPagina = 5;
+
 export interface Ordenacao {
     chave: keyof CandidaturaView | '';
     direcao: 'asc' | 'desc' | '';
@@ -53,19 +55,21 @@ export const CandidaturaInicial: CandidaturaView = {
 };
 
 /**
- * Retorna uma cópia das candidaturas filtradas e ordenadas.
+ * Retorna uma cópia das candidaturas filtradas, paginadas e ordenadas.
  *
  * @export
  * @param {CandidaturaView[]} candidaturas
+ * @param {number} pagina
  * @param {Filtros} filtros
  * @param {Ordenacao} ordenacao
- * @return {*}  {CandidaturaView[]}
+ * @return {*}  {[CandidaturaView[], number]}
  */
 export function filtrarOrdenar(
     candidaturas: CandidaturaView[],
+    pagina: number,
     filtros: Filtros,
     ordenacao: Ordenacao,
-): CandidaturaView[] {
+): [CandidaturaView[], number] {
     let dados = [...candidaturas];
     dados = dados.filter(item =>
         Object.keys(filtros).every(
@@ -90,7 +94,11 @@ export function filtrarOrdenar(
         });
     }
 
-    return dados;
+    const inicio = (pagina - 1) * QtdePorPagina;
+    const fim = inicio + QtdePorPagina;
+    const paginado = dados.slice(inicio, fim);
+
+    return [paginado, dados.length];
 }
 
 /**

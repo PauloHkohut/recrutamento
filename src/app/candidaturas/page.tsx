@@ -17,6 +17,7 @@ import {
     Filtros,
     obtemLabel,
     Ordenacao,
+    QtdePorPagina,
 } from './CandidaturaView';
 
 export default function Candidaturas() {
@@ -26,21 +27,24 @@ export default function Candidaturas() {
     const [detalhe, setDetalhe] = useState<CandidaturaView>(CandidaturaInicial);
     const [ordenacao, setOrdenacao] = useState<Ordenacao>({ chave: '', direcao: '' });
     const [filtros, setFiltros] = useState<Filtros>(FILTROS);
+    const [pagina, setPagina] = useState(1);
+    const [paginas, setPaginas] = useState(1);
 
     useEffect(() => {
         // Obtêm todos os candidaturas ao iniciar a página.
         const setFormData = async () => {
-            const data = await getCandidaturasViews();
-            setCandidaturas(data);
-            setCandidaturasFiltradas(data);
+            const dados = await getCandidaturasViews();
+            setCandidaturas(dados);
+            setCandidaturasFiltradas(dados);
         };
         setFormData();
     }, []);
 
     useEffect(() => {
-        const dados = filtrarOrdenar(candidaturas, filtros, ordenacao);
+        const [dados, qtde] = filtrarOrdenar(candidaturas, pagina, filtros, ordenacao);
         setCandidaturasFiltradas(dados);
-    }, [ordenacao, candidaturas, filtros]);
+        setPaginas(Math.ceil(qtde / QtdePorPagina));
+    }, [candidaturas, pagina, filtros, ordenacao]);
 
     const onOrdenar = (campo: keyof CandidaturaView) => {
         let direcao: 'asc' | 'desc' | '' = 'asc';
@@ -153,6 +157,34 @@ export default function Candidaturas() {
                     ))}
                 </tbody>
             </table>
+
+            <div className="container text-center">
+                <div className="row justify-content-md-center">
+                    <div className="col col-lg-2">
+                        <nav>
+                            <ul className="pagination">
+                                <li className={`page-item ${pagina === 1 || paginas < 2 ? 'disabled' : ''}`}>
+                                    <a className="page-link" href="#" onClick={() => setPagina(pagina - 1)}>
+                                        Anterior
+                                    </a>
+                                </li>
+                                {Array.from(new Array(paginas)).map((_, i) => (
+                                    <li key={i} className={`page-item ${pagina === i + 1 ? 'active' : ''}`}>
+                                        <a className="page-link" href="#" onClick={() => setPagina(i + 1)}>
+                                            {i + 1}
+                                        </a>
+                                    </li>
+                                ))}
+                                <li className={`page-item ${pagina === paginas || paginas < 2 ? 'disabled' : ''}`}>
+                                    <a className="page-link" href="#" onClick={() => setPagina(pagina + 1)}>
+                                        Próxima
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
 
             <div className="modal fade" id="detalhesModal">
                 <div className="modal-dialog">
