@@ -8,20 +8,22 @@ import { getAreas, getCidades, getEstados, getLojas } from './formulario';
  */
 export async function getAreasAbertas(): Promise<string[]> {
     const areasAbertas: string[] = [];
-
+    const maximoAreas = 5;
     const estados = await getEstados();
-    estados.forEach(async estado => {
+
+    for (const estado of estados) {
         const cidades = await getCidades(estado.id);
-        cidades.forEach(async cidade => {
+        for (const cidade of cidades) {
             const lojas = await getLojas(cidade.id);
-            lojas.forEach(async loja => {
+            for (const loja of lojas) {
                 const areas = await getAreas(loja.id);
-                areas.forEach(area => {
+                for (const area of areas) {
+                    if (areasAbertas.length >= maximoAreas) break;
                     areasAbertas.push(`${area.nome} (${loja.nome}) | ${cidade.nome} - ${estado.sigla}`);
-                });
-            });
-        });
-    });
+                }
+            }
+        }
+    }
 
     return areasAbertas;
 }
