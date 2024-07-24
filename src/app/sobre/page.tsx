@@ -2,8 +2,8 @@ import './page.css';
 
 export default function Sobre() {
     return (
-        <>
-            <div className="container py-5">
+        <div className="container py-5">
+            <div>
                 <h1 className="mb-4">Sobre o Sistema de Recrutamento</h1>
                 <p className="lead text-justify">
                     Nosso sistema foi desenvolvido para transformar o processo de recrutamento, tornando-o mais
@@ -48,6 +48,6 @@ export default function Sobre() {
                 cuidadosamente projetado para cumprir todas as normas estabelecidas pela Lei Geral de Proteção de Dados
                 (LGPD), garantindo a segurança e a confidencialidade das informações de todos os usuários.
             </p>
-        </>
+        </div>
     );
 }

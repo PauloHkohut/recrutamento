@@ -15,7 +15,7 @@ export interface CandidaturaView {
     curriculoId: string;
 }
 
-export const QtdePorPagina = 5;
+export const QtdePorPagina = 8;
 
 export interface Ordenacao {
     chave: keyof CandidaturaView | '';

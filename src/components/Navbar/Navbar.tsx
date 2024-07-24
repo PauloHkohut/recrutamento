@@ -9,10 +9,10 @@ export default function Navbar() {
     const pathname = usePathname();
 
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
-            <div className="container-fluid">
-                <a className="navbar-brand" href="/">
-                    <Image src="/logo.png" width={65} height={30} alt="logo" />
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div className="container px-5">
+                <a className="navbar-brand p-1" href="/">
+                    <Image src="/logo.png" width={78} height={36} alt="logo" />
                 </a>
                 <button
                     className="navbar-toggler"
@@ -81,14 +81,14 @@ export default function Navbar() {
                                     />
                                 </li>
                                 <li className="nav-item">
-                                    <button className="btn btn-outline-danger" onClick={logout}>
+                                    <button className="btn btn-danger" onClick={logout}>
                                         Logout
                                     </button>
                                 </li>
                             </>
                         ) : (
                             <li className="nav-item">
-                                <button className="btn btn-outline-success" onClick={login}>
+                                <button className="btn btn-success" onClick={login}>
                                     Login
                                 </button>
                             </li>

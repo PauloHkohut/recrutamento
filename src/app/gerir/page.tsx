@@ -51,7 +51,7 @@ export default function Gerir() {
     return usuario === undefined ? (
         <Loading />
     ) : (
-        <>
+        <div className="container">
             <br />
             <div className="card">
                 <div className="card-header">
@@ -681,6 +681,7 @@ export default function Gerir() {
                     </div>
                 </div>
             </div>
-        </>
+            <br />
+        </div>
     );
 }

@@ -1,0 +1,9 @@
+.body-flex {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.div-children {
+    flex: 1;
+}

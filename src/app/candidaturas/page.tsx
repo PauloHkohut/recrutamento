@@ -68,8 +68,8 @@ export default function Candidaturas() {
     return usuario === undefined ? (
         <Loading />
     ) : (
-        <>
-            <table className="table table-sm" style={{ textAlign: 'center' }}>
+        <div className="container py-5">
+            <table className="table table-hover table-sm text-center">
                 <thead>
                     <tr>
                         <th scope="col"></th>
@@ -158,33 +158,27 @@ export default function Candidaturas() {
                 </tbody>
             </table>
 
-            <div className="container text-center">
-                <div className="row justify-content-md-center">
-                    <div className="col col-lg-2">
-                        <nav>
-                            <ul className="pagination">
-                                <li className={`page-item ${pagina === 1 || paginas < 2 ? 'disabled' : ''}`}>
-                                    <a className="page-link" href="#" onClick={() => setPagina(pagina - 1)}>
-                                        Anterior
-                                    </a>
-                                </li>
-                                {Array.from(new Array(paginas)).map((_, i) => (
-                                    <li key={i} className={`page-item ${pagina === i + 1 ? 'active' : ''}`}>
-                                        <a className="page-link" href="#" onClick={() => setPagina(i + 1)}>
-                                            {i + 1}
-                                        </a>
-                                    </li>
-                                ))}
-                                <li className={`page-item ${pagina === paginas || paginas < 2 ? 'disabled' : ''}`}>
-                                    <a className="page-link" href="#" onClick={() => setPagina(pagina + 1)}>
-                                        Próxima
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
+            <nav>
+                <ul className="pagination justify-content-center">
+                    <li className={`page-item ${pagina === 1 || paginas < 2 ? 'disabled' : ''}`}>
+                        <a className="page-link" href="#" onClick={() => setPagina(pagina - 1)}>
+                            Anterior
+                        </a>
+                    </li>
+                    {Array.from(new Array(paginas)).map((_, i) => (
+                        <li key={i} className={`page-item ${pagina === i + 1 ? 'active' : ''}`}>
+                            <a className="page-link" href="#" onClick={() => setPagina(i + 1)}>
+                                {i + 1}
+                            </a>
+                        </li>
+                    ))}
+                    <li className={`page-item ${pagina === paginas || paginas < 2 ? 'disabled' : ''}`}>
+                        <a className="page-link" href="#" onClick={() => setPagina(pagina + 1)}>
+                            Próxima
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
             <div className="modal fade" id="detalhesModal">
                 <div className="modal-dialog">
@@ -247,6 +241,6 @@ export default function Candidaturas() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

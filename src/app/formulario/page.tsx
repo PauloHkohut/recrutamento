@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { formataCelular, validaFormulario, validaRecaptcha, validarRestricao } from './formUtils';
+import './page.css';
 
 export default function Formulario() {
     const router = useRouter();
@@ -75,7 +76,17 @@ export default function Formulario() {
     }
     return restricaoValidada ? (
         termoAceito ? (
-            <div>
+            <div className="bg-light py-5">
+                <div className="px-5 px-5">
+                    <div className="text-center mb-5">
+                        <div className="detalhe bg-primary bg-gradient text-white rounded-3 mb-3">
+                            <i className="bi bi-envelope"></i>
+                        </div>
+                        <h2 className="fw-bolder">Candidatura</h2>
+                        <p className="lead mb-0">Submeta sua candidatura para análise</p>
+                    </div>
+                </div>
+
                 <form className="needs-validation" noValidate action={f => submeterCandidatura(f, usuario.uid)}>
                     <div className="container">
                         <div className="row">
